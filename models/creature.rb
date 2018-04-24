@@ -85,8 +85,20 @@ def Creature.find_by_name(name)
   db.prepare("find_by_name", sql)
   db.exec_prepared("find_by_name", [name])
   db.close()
-  creature = creature_hash{ |creature_hash| Creature.new(creature_hash)}
+  creature = name
   return creature
 end
 
+def Creature.find_by_id(id)
+  db = PG.connect({
+    dbname: "bounty_hunter",
+    host: "localhost"
+  })
+  sql = "SELECT name FROM bounty_hunters  WHERE id = $5"
+  db.prepare("find_by_id", sql)
+  db.exec_prepared("find_by_id", [id])
+  db.close()
+  creature = id
+  return creature
+end
 end
